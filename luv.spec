@@ -4,7 +4,7 @@
 #
 Name     : luv
 Version  : 1.30.1.1
-Release  : 2
+Release  : 3
 URL      : https://github.com/luvit/luv/releases/download/1.30.1-1/luv-1.30.1-1.tar.gz
 Source0  : https://github.com/luvit/luv/releases/download/1.30.1-1/luv-1.30.1-1.tar.gz
 Summary  : Bare and full libuv bindings for Lua/LuaJIT.
@@ -55,6 +55,7 @@ license components for the luv package.
 
 %prep
 %setup -q -n luv-1.30.1-1
+cd %{_builddir}/luv-1.30.1-1
 %patch1 -p1
 
 %build
@@ -62,7 +63,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1571257011
+export SOURCE_DATE_EPOCH=1604899463
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -70,19 +71,19 @@ export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake .. -DLUA_BUILD_TYPE=System \
 -DWITH_LUA_ENGINE=lua \
 -DWITH_SHARED_LIBUV=ON \
 -DBUILD_SHARED_LIBS=ON \
 -DBUILD_MODULE=OFF
-make  %{?_smp_mflags}  VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1571257011
+export SOURCE_DATE_EPOCH=1604899463
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/luv
 cp %{_builddir}/luv-1.30.1-1/LICENSE.txt %{buildroot}/usr/share/package-licenses/luv/2b8b815229aa8a61e483fb4ba0588b8b6c491890
